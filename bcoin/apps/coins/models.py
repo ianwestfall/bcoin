@@ -4,6 +4,8 @@ from django.db import models, transaction
 from dataclasses import dataclass
 from django.db.models import Q
 
+import random
+
 from django.db.models.aggregates import Sum
 from bcoin.apps.coins.exceptions import (
     InvalidAmountException,
@@ -64,6 +66,22 @@ class Wallet(models.Model):
 
         transactions = Transaction.from_transfer_list(transfers)
         return transactions
+
+    @staticmethod
+    def give_weekly_coins():
+        for wallet in Wallet.objects.all():
+            # Grab a new transaction id
+            transaction_id = TransactionId.get_next()
+
+            # Random amount from 5 to 20
+            amount = sum(random.randint(1, 20) for _ in range(5))
+
+            # Make the transfer
+            CoinTransfer.objects.create(
+                wallet=wallet,
+                transaction_id=transaction_id,
+                amount=amount,
+            )
 
 
 class CoinTransfer(models.Model):
