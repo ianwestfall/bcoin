@@ -15,6 +15,7 @@ class WalletViewSet(viewsets.ModelViewSet):
     serializer_class = WalletSerializer
     permission_classes = [permissions.IsAuthenticated]
     lookup_field = "discord_id"
+    lookup_value_regex = r"[^\/]+"
 
 
 class CoinTransferViewSet(viewsets.ReadOnlyModelViewSet):

@@ -16,7 +16,6 @@ def remove_initial_transaction_id(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("coins", "0001_initial"),
     ]

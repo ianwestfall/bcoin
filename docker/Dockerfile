@@ -1,4 +1,4 @@
-FROM python:3.10.1-alpine as builder
+FROM python:3.10.1-alpine
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
@@ -7,32 +7,17 @@ ENV APP_HOME=/home/app/web
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 
+RUN addgroup -S app && adduser -S app -G app
+
 RUN apk update && \
-    apk add --no-cache build-base gcc python3-dev libpq-dev
+    apk add --no-cache build-base gcc python3-dev libpq-dev bash
 
 RUN pip install --upgrade pip
 RUN pip install pipenv
 COPY Pipfile .
 COPY Pipfile.lock .
 
-RUN pipenv lock -r --dev --keep-outdated > requirements.txt
-RUN pip wheel --no-cache-dir --no-deps --wheel-dir $APP_HOME/wheels -r requirements.txt
-
-FROM python:3.10.1-alpine
-
-RUN addgroup -S app && adduser -S app -G app
-
-ENV APP_HOME=/home/app/web
-RUN mkdir -p $APP_HOME
-WORKDIR $APP_HOME
-
-RUN apk update && \
-    apk add --no-cache libpq-dev bash
-
-COPY --from=builder $APP_HOME/wheels /wheels
-COPY --from=builder $APP_HOME/requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install --no-cache /wheels/*
+RUN pipenv install --dev --system --deploy --ignore-pipfile
 
 COPY . $APP_HOME
 COPY docker/startup.sh .

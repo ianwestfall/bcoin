@@ -10,10 +10,9 @@ class TestWallet(TestCase):
 
         self.assertEqual(Wallet.objects.all().count(), 0)
 
-
     def test_give_weekly_coins(self):
         wallets: Sequence[Wallet] = WalletFactory.create_batch(100)
-        
+
         Wallet.give_weekly_coins()
 
         for wallet in wallets:

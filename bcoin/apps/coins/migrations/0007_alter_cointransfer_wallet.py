@@ -5,15 +5,16 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('coins', '0006_auto_20211224_2113'),
+        ("coins", "0006_auto_20211224_2113"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='cointransfer',
-            name='wallet',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='coins.wallet'),
+            model_name="cointransfer",
+            name="wallet",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.DO_NOTHING, to="coins.wallet"
+            ),
         ),
     ]

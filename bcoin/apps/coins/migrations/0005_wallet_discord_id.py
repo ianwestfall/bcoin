@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('coins', '0004_remove_wallet_user_id'),
+        ("coins", "0004_remove_wallet_user_id"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='wallet',
-            name='discord_id',
+            model_name="wallet",
+            name="discord_id",
             field=models.CharField(default=7, max_length=50, unique=True),
             preserve_default=False,
         ),

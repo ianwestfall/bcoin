@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('coins', '0002_auto_20211217_0049'),
+        ("coins", "0002_auto_20211217_0049"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='wallet',
-            name='user_id',
+            model_name="wallet",
+            name="user_id",
             field=models.CharField(max_length=50, unique=True),
         ),
     ]

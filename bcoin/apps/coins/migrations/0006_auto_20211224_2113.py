@@ -16,7 +16,6 @@ def reverse(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("coins", "0005_wallet_discord_id"),
     ]
