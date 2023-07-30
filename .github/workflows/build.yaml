@@ -10,6 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Configure containers
+        run: |
+          echo "POSTGRES_USER=test_admin" >> .env
+          echo "POSTGRES_PASSWORD=test_password" >> .env
+          echo "PGADMIN_DEFAULT_EMAIL=admin@test.com" >> .env
+          echo "PGADMIN_DEFAULT_PASSWORD=password" >> .env
+          echo "STARTING_AMOUNT=100" >> .env
+          echo "COOL_GUYS=" >> .env
+          echo "COOL_GUY_AMOUNT=1000" >> .env
       - name: Run Unit Tests
         run: |
           docker-compose run app python manage.py test bcoin.apps.coins
