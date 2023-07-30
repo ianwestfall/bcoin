@@ -2,7 +2,6 @@ from decimal import Decimal
 from typing import List, Sequence
 from django.db import models, transaction
 from dataclasses import dataclass
-from django.db.models import Q
 
 import random
 
@@ -82,6 +81,13 @@ class Wallet(models.Model):
                 transaction_id=transaction_id,
                 amount=amount,
             )
+
+    def give_free_coins(self, amount):
+        CoinTransfer.objects.create(
+            wallet=self,
+            transaction_id=TransactionId.get_next(),
+            amount=amount,
+        )
 
 
 class CoinTransfer(models.Model):

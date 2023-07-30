@@ -1,12 +1,21 @@
 name: Build
-on: [push]
+on: [push, pull_request]
 jobs:
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Unit Tests
+        run: |
+          docker-compose run app python manage.py test bcoin.apps.coins
   build-and-publish-container:
     name: Build and publish container to Docker Hub
     runs-on: ubuntu-latest
+    depends-on: test
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
